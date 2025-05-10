@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const shapeSelector = document.getElementById("shapeSelector");
-  const inputField = document.getElementById("inputField");
+  const inputFeilds = document.getElementById("inputFeilds");
   const calculateBtn = document.getElementById("calculateBtn");
   const result = document.getElementById("result");
 
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     circle: {
       inputs: ["Radius"],
-      calculate: (values) => Math.PI * Math.pow(values[1], 2),
+      calculate: (values) => Math.PI * Math.pow(values[0], 2),
     },
 
     triangle: {
@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     square: {
       inputs: ["Side"],
-      calculate: (values) => Math.pow(values[1], 2),
+      calculate: (values) => Math.pow(values[0], 2),
     },
 
-    parallegram: {
+    parallelogram: {
       inputs: ["Base", "Height"],
       calculate: (values) => values[0] * values[1],
     },
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     inputFeilds.innerHTML = shape.inputs
       .map(
         (label, index) =>
-          `<input type="number" placeholder = "${label} id="input ${index}" required>`
+          `<input type="number" placeholder ="${label}" id="input${index}" required>`
       )
       .join("");
   }
@@ -64,13 +64,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const shape = shapes[selectedShape];
     const values = shape.inputs.map((_, index) =>
-      paraFloat(document.getElementById(`input${index}`).value)
+      parseFloat(document.getElementById(`input${index}`).value)
     );
 
     if (values.some(isNaN)) {
       result.textContent = "Please enter a valid number";
     } else {
-      const area = sjhape.calculate(values);
+      const area = shape.calculate(values);
       result.textContent = `Area: ${area.toFixed(2)}`;
     }
   });
